@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horario Laboral Interactivo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Horario Laboral</h1>
+            <p>Sistema de registro de horarios y control de asistencia</p>
+        </header>
+
+        <main>
+            <div class="form-section">
+                <div class="worker-info">
+                    <label for="workerName">👤 Nombre del Trabajador:</label>
+                    <input type="text" id="workerName" placeholder="Ingrese el nombre completo">
+                </div>
+
+                <div class="date-selector">
+                    <div class="date-field">
+                        <label for="monthSelect">📅 Mes:</label>
+                        <select id="monthSelect">
+                            <option value="">Seleccionar mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="date-field">
+                        <label for="yearInput">📆 Año:</label>
+                        <input type="number" id="yearInput" placeholder="Ej: 2025" min="1900" max="2100">
+                    </div>
+                </div>
+
+                <div class="schedule-table-container">
+                    <h3>📊 Registro de Horarios</h3>
+                    <div class="table-wrapper">
+                        <table id="scheduleTable">
+                            <thead>
+                                <tr>
+                                    <th>Día</th>
+                                    <th>Fecha</th>
+                                    <th>Entrada</th>
+                                    <th>Salida</th>
+                                    <th>Horas Trabajadas</th>
+                                    <th>Incidencias</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleBody">
+                                <!-- Los días se generarán dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="signature-section">
+                    <h3>✍️ Firma del Trabajador</h3>
+                    <div class="signature-container">
+                        <canvas id="signatureCanvas" width="600" height="200"></canvas>
+                        <div class="signature-controls">
+                            <button type="button" id="clearSignature" class="btn-secondary">🗑️ Limpiar Firma</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" id="saveData" class="btn-primary">💾 Guardar Datos</button>
+                    <button type="button" id="loadData" class="btn-secondary">📂 Cargar Datos</button>
+                    <button type="button" id="exportData" class="btn-secondary">📄 Exportar</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2025 Sistema de Horarios - Todos los derechos reservados</p>
+        </footer>
+    </div>
+
+    <div id="notification" class="notification hidden">
+        <span id="notificationText"></span>
+        <button id="closeNotification">×</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
