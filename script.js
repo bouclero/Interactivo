@@ -1,4 +1,4 @@
-// Horario Laboral Interactivo - JavaScript
+// Horario Laboral - JavaScript
 class HorarioApp {
     constructor() {
         this.currentData = {
@@ -23,18 +23,24 @@ class HorarioApp {
         // Cargar datos guardados primero
         this.loadSavedData();
 
-        // Si no se cargaron datos (o si no hay datos guardados para el mes/año actual),
-        // establecer el año actual por defecto y el mes actual
-        if (!this.currentData.year) {
+        // Establecer el año y mes actuales por defecto si no se cargaron datos
+        // o si los datos cargados no tienen un año/mes válido.
+        // Esto asegura que siempre haya un mes y año seleccionados al inicio.
+        if (!this.currentData.year || isNaN(parseInt(this.currentData.year))) {
             const currentYear = new Date().getFullYear().toString();
             document.getElementById("yearInput").value = currentYear;
             this.currentData.year = currentYear;
         }
-        if (!this.currentData.month) {
+        if (!this.currentData.month || isNaN(parseInt(this.currentData.month))) {
             const currentMonth = (new Date().getMonth() + 1).toString();
             document.getElementById("monthSelect").value = currentMonth;
             this.currentData.month = currentMonth;
         }
+
+        // Asegurarse de que los campos de entrada reflejen los datos cargados o por defecto
+        document.getElementById("workerName").value = this.currentData.workerName;
+        document.getElementById("monthSelect").value = this.currentData.month;
+        document.getElementById("yearInput").value = this.currentData.year;
 
         // Generar la tabla después de que los datos iniciales o cargados estén listos
         this.generateScheduleTable();
@@ -477,8 +483,17 @@ class HorarioApp {
             const currentMonth = currentDate.getMonth() + 1;
             const currentYear = currentDate.getFullYear();
             
-            if (parseInt(lastSchedule.month) === currentMonth && parseInt(lastSchedule.year) === currentYear) {
+            // Cargar si coincide el trabajador, mes y año
+            const currentWorkerName = document.getElementById("workerName").value;
+            if (lastSchedule.workerName === currentWorkerName && parseInt(lastSchedule.month) === currentMonth && parseInt(lastSchedule.year) === currentYear) {
                 this.loadScheduleData(lastSchedule.key);
+            } else if (!currentWorkerName) { // Si no hay nombre de trabajador, cargar el último guardado para el mes/año actual
+                const schedulesForCurrentMonthYear = savedSchedules.filter(s => 
+                    parseInt(s.month) === currentMonth && parseInt(s.year) === currentYear
+                );
+                if (schedulesForCurrentMonthYear.length > 0) {
+                    this.loadScheduleData(schedulesForCurrentMonthYear[0].key);
+                }
             }
         }
     }
@@ -560,3 +575,4 @@ class HorarioApp {
 document.addEventListener("DOMContentLoaded", () => {
     new HorarioApp();
 });
+
